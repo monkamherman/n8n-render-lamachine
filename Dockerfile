@@ -1,14 +1,14 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Install dependencies
-RUN npm install -g n8n
+RUN npm install -g n8n@latest
 
 # Set working directory
 WORKDIR /data
 
 # Copy package files
 COPY package*.json ./
-RUN npm install
+RUN npm install --force
 
 # Copy application
 COPY . .
