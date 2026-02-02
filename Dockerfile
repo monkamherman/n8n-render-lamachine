@@ -1,7 +1,8 @@
 FROM node:20-alpine
 
 # Install dependencies
-RUN npm install -g n8n@latest
+RUN npm install -g n8n@latest && \
+    echo "n8n version: $(n8n --version)"
 
 # Set working directory
 WORKDIR /data
