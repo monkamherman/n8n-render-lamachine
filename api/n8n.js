@@ -4,6 +4,9 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 5678;
 
+// Middleware pour parser le JSON
+app.use(express.json());
+
 // Configuration de n8n avec Supabase
 const n8nConfig = {
   DATABASE_URL: process.env.DATABASE_URL,
@@ -16,13 +19,31 @@ const n8nConfig = {
   PORT: port,
 };
 
-// Démarrer n8n
+// Routes de base
 app.get("/", (req, res) => {
-  res.send("n8n is running on Vercel with Supabase");
+  res.json({
+    message: "n8n is running on Vercel with Supabase",
+    status: "active",
+    config: {
+      database: n8nConfig.DATABASE_URL ? "configured" : "missing",
+      encryption: n8nConfig.N8N_ENCRYPTION_KEY ? "configured" : "missing",
+    },
+  });
 });
 
 app.get("/healthz", (req, res) => {
-  res.status(200).send("OK");
+  res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
+});
+
+// Proxy pour n8n
+app.use("/n8n", (req, res) => {
+  // Pour l'instant, rediriger vers une réponse simple
+  // n8n nécessite un processus complet, ce qui n'est pas possible sur Vercel serverless
+  res.json({
+    message: "n8n interface - mode serverless limité",
+    note: "Utilisez les webhooks pour l'automatisation",
+    webhook_url: `${process.env.WEBHOOK_URL}/webhook`,
+  });
 });
 
 // Export pour Vercel
