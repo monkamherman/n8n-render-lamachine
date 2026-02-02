@@ -34,9 +34,9 @@ RUN npm install -g n8n@1.60.0  # Remplacez par la version souhaitée
 
 ## Versions recommandées
 
-- **Stable :** `n8n@1.60.0` (dernière stable)
+- **Dernière stable :** `n8n@2.4.8` (actuelle)
 - **Latest :** `n8n@latest` (toujours à jour)
-- **Spécifique :** `n8n@1.59.3` (version testée)
+- **Spécifique :** `n8n@2.4.8` (version testée)
 
 ## Vérifier les versions
 
