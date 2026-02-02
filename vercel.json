@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/api/index.js"
     }
   ],
   "env": {
@@ -23,7 +23,7 @@
     "WEBHOOK_URL": "@webhook-url"
   },
   "functions": {
-    "api/n8n.js": {
+    "api/index.js": {
       "maxDuration": 30
     }
   }
