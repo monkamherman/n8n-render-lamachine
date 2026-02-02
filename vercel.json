@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "env": {
+    "DB_TYPE": "postgresdb",
+    "DB_POSTGRESDB_HOST": "@supabase-host",
+    "DB_POSTGRESDB_DATABASE": "@supabase-database",
+    "DB_POSTGRESDB_PORT": "@supabase-port",
+    "DB_POSTGRESDB_USER": "@supabase-user",
+    "DB_POSTGRESDB_PASSWORD": "@supabase-password",
+    "PORT": "5678",
+    "N8N_LOG_LEVEL": "info",
+    "GENERIC_TIMEZONE": "Europe/Paris",
+    "TZ": "Europe/Paris",
+    "N8N_DEFAULT_LOCALE": "fr",
+    "N8N_ENCRYPTION_KEY": "@encryption-key",
+    "WEBHOOK_URL": "@webhook-url"
+  },
+  "functions": {
+    "api/n8n.js": {
+      "maxDuration": 30
+    }
+  }
+}
