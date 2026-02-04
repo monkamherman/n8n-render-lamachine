@@ -1,5 +1,7 @@
+require("dotenv").config();
 const express = require("express");
 const { exec } = require("child_process");
+const { setupDatabaseCheckRoute } = require("../check-db-connection");
 
 const app = express();
 const port = process.env.PORT || 5678;
@@ -53,9 +55,25 @@ app.get("/keep-alive", (req, res) => {
 
 // Démarrer n8n en arrière-plan
 function startN8n() {
-  const n8nCommand = `npx n8n start --tunnel`;
+  // Configurer les variables d'environnement pour n8n
+  const env = {
+    ...process.env,
+    N8N_BASIC_AUTH_ACTIVE: "false",
+    N8N_HOST: "0.0.0.0",
+    N8N_PORT: "5679", // Port différent pour éviter les conflits
+    N8N_PROTOCOL: "http",
+    WEBHOOK_URL: process.env.WEBHOOK_URL,
+  };
 
-  exec(n8nCommand, (error, stdout, stderr) => {
+  const n8nCommand = `n8n start`;
+
+  console.log("Démarrage de n8n avec la configuration:", {
+    DATABASE_URL: env.DATABASE_URL ? "configured" : "missing",
+    N8N_PORT: env.N8N_PORT,
+    WEBHOOK_URL: env.WEBHOOK_URL,
+  });
+
+  exec(n8nCommand, { env }, (error, stdout, stderr) => {
     if (error) {
       console.error(`n8n start error: ${error}`);
       return;
@@ -66,6 +84,9 @@ function startN8n() {
     }
   });
 }
+
+// Configurer les routes de vérification de la base de données
+setupDatabaseCheckRoute(app);
 
 // Démarrer le serveur Express
 app.listen(port, () => {

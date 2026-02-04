@@ -24,3 +24,12 @@ services:
         generateValue: true
       - key: WEBHOOK_URL
         value: https://n8n-render-lamachine.onrender.com
+
+  - type: cron
+    name: keep-alive
+    env: docker
+    region: frankfurt
+    plan: free
+    schedule: "*/10 * * * *" # Toutes les 10 minutes
+    buildCommand: "echo 'No build needed'"
+    startCommand: "curl -f https://n8n-render-lamachine.onrender.com/keep-alive || exit 1"

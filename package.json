@@ -5,10 +5,16 @@
   "main": "api/n8n.js",
   "scripts": {
     "start": "node api/n8n.js",
-    "dev": "nodemon api/n8n.js"
+    "dev": "nodemon api/n8n.js",
+    "test-db": "node test-db.js",
+    "test-db-quick": "node test-db.js --quick",
+    "check-db": "node check-db-connection.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "n8n": "^2.6.3",
+    "pg": "^8.11.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.0"
