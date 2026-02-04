@@ -1,4 +1,4 @@
-v1.2const { Client } = require("pg");
+const { Client } = require("pg");
 
 // Configuration de la base de données depuis les variables d'environnement
 const dbConfig = {
