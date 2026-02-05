@@ -2,6 +2,7 @@ services:
   - type: web
     name: n8n
     env: docker
+    dockerfilePath: ./Dockerfile
     region: frankfurt
     plan: free
     branch: main
@@ -52,6 +53,7 @@ services:
   - type: web
     name: metabase
     env: docker
+    dockerfilePath: ./metabase.Dockerfile
     region: frankfurt
     plan: free
     branch: main

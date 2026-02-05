@@ -7,5 +7,5 @@ EXPOSE 3000
 ENV MB_DB_TYPE=postgres
 ENV MB_DB_PORT=5432
 
-# Démarrage de Metabase
-CMD ["java", "-jar", "/app/metabase.jar"]
+# Démarrage de Metabase avec les options Java optimisées
+CMD ["sh", "-c", "java ${JAVA_OPTS:-'-Xmx750m'} -jar /app/metabase.jar"]
