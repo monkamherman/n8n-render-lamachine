@@ -1,26 +1,11 @@
-FROM node:20-slim
+FROM n8nio/n8n:latest
 
-# Install Python 3, build dependencies, and n8n
-RUN apt-get update && \
-    apt-get install -y python3 make g++ && \
-    npm install -g n8n@2.4.8 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    echo "n8n version: $(n8n --version)"
+# Configuration pour Render
+ENV N8N_PORT=5678
+ENV N8N_PROTOCOL=https
+ENV N8N_HOST=0.0.0.0
 
-# Set working directory
-WORKDIR /data
+# Forcer IPv4 pour éviter les problèmes de connexion
+ENV NODE_OPTIONS="--dns-result-order=ipv4first"
 
-# Copy package files
-COPY package*.json ./
-RUN npm install --force
-
-# Copy application
-COPY . .
-
-# Expose port
-EXPOSE 5678
-
-# Start n8n with PostgreSQL using environment variables
-# The start script will display config and launch n8n
-CMD ["./start-n8n.sh"]
+CMD ["n8n", "start"]

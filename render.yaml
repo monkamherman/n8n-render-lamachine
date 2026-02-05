@@ -9,28 +9,26 @@ services:
     numInstances: 1
     healthCheckPath: /healthz
     envVars:
-      - key: DATABASE_URL
-        value: postgresql://postgres:YjxBJtgTwSlBxnSQ@db.kbeseafmtepfjatzvjnr.supabase.co:5432/postgres
-      - key: DB_TYPE
-        value: postgresdb
-      - key: N8N_DB_TYPE
-        value: postgresdb
-      - key: N8N_DB_POSTGRESDB_HOST
-        value: db.kbeseafmtepfjatzvjnr.supabase.co
-      - key: N8N_DB_POSTGRESDB_PORT
+      - key: DB_POSTGRESDB_HOST
+        value: aws-0-eu-central-1.pooler.supabase.com
+      - key: DB_POSTGRESDB_PORT
         value: "5432"
-      - key: N8N_DB_POSTGRESDB_DATABASE
+      - key: DB_POSTGRESDB_DATABASE
         value: postgres
-      - key: N8N_DB_POSTGRESDB_USER
+      - key: DB_POSTGRESDB_USER
         value: postgres
-      - key: N8N_DB_POSTGRESDB_PASSWORD
-        value: YjxBJtgTwSlBxnSQ
+      - key: DB_POSTGRESDB_PASSWORD
+        sync: false
+      - key: DB_POSTGRESDB_SSL_ENABLED
+        value: "true"
+      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
+        value: "false"
+      - key: DB_POSTGRESDB_POOL_SIZE
+        value: "2"
       - key: PORT
         value: 5678
       - key: N8N_PORT
         value: 5678
-      - key: N8N_HOST
-        value: 0.0.0.0
       - key: N8N_LOG_LEVEL
         value: debug
       - key: GENERIC_TIMEZONE
@@ -47,6 +45,8 @@ services:
         value: .onrender.com
       - key: N8N_HOST
         value: n8n-a6u8.onrender.com
+      - key: NODE_OPTIONS
+        value: "--dns-result-order=ipv4first"
       - key: N8N_DISABLE_TASK_RUNNERS
         value: "false"
       - key: DB_CONNECTION_POOL_SIZE
@@ -65,20 +65,22 @@ services:
     branch: main
     numInstances: 1
     envVars:
-      - key: DATABASE_URL
-        value: postgresql://postgres:YjxBJtgTwSlBxnSQ@db.kbeseafmtepfjatzvjnr.supabase.co:5432/postgres
-      - key: N8N_DB_TYPE
-        value: postgresdb
-      - key: N8N_DB_POSTGRESDB_HOST
-        value: db.kbeseafmtepfjatzvjnr.supabase.co
-      - key: N8N_DB_POSTGRESDB_PORT
+      - key: DB_POSTGRESDB_HOST
+        value: aws-0-eu-central-1.pooler.supabase.com
+      - key: DB_POSTGRESDB_PORT
         value: "5432"
-      - key: N8N_DB_POSTGRESDB_DATABASE
+      - key: DB_POSTGRESDB_DATABASE
         value: postgres
-      - key: N8N_DB_POSTGRESDB_USER
+      - key: DB_POSTGRESDB_USER
         value: postgres
-      - key: N8N_DB_POSTGRESDB_PASSWORD
-        value: YjxBJtgTwSlBxnSQ
+      - key: DB_POSTGRESDB_PASSWORD
+        sync: false
+      - key: DB_POSTGRESDB_SSL_ENABLED
+        value: "true"
+      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
+        value: "false"
+      - key: NODE_OPTIONS
+        value: "--dns-result-order=ipv4first"
       - key: N8N_LOG_LEVEL
         value: debug
       - key: GENERIC_TIMEZONE
@@ -107,7 +109,7 @@ services:
       - key: MB_DB_PORT
         value: "5432"
       - key: MB_DB_HOST
-        value: db.kbeseafmtepfjatzvjnr.supabase.co
+        value: aws-0-eu-central-1.pooler.supabase.com
       - key: MB_DB_USER
         value: postgres
       - key: MB_DB_PASS
