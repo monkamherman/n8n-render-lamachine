@@ -7,5 +7,3 @@ ENV N8N_HOST=0.0.0.0
 
 # Forcer IPv4 pour éviter les problèmes de connexion
 ENV NODE_OPTIONS="--dns-result-order=ipv4first"
-
-CMD ["/usr/local/bin/n8n", "start"]
