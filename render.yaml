@@ -12,6 +12,10 @@ services:
         value: postgresql://postgres:YjxBJtgTwSlBxnSQ@db.kbeseafmtepfjatzvjnr.supabase.co:5432/postgres
       - key: PORT
         value: 5678
+      - key: N8N_PORT
+        value: 5678
+      - key: N8N_HOST
+        value: 0.0.0.0
       - key: N8N_LOG_LEVEL
         value: info
       - key: GENERIC_TIMEZONE
@@ -26,6 +30,24 @@ services:
         value: https://n8n-a6u8.onrender.com
       - key: N8N_DISABLE_TASK_RUNNERS
         value: "true"
+      - key: DB_CONNECTION_POOL_SIZE
+        value: "10"
+      - key: DB_CONNECTION_POOL_MIN
+        value: "2"
+      - key: DB_CONNECTION_TIMEOUT
+        value: "60000"
+      - key: N8N_DB_TYPE
+        value: postgresql
+      - key: N8N_DB_POSTGRESDB_HOST
+        value: db.kbeseafmtepfjatzvjnr.supabase.co
+      - key: N8N_DB_POSTGRESDB_PORT
+        value: "5432"
+      - key: N8N_DB_POSTGRESDB_DATABASE
+        value: postgres
+      - key: N8N_DB_POSTGRESDB_USER
+        value: postgres
+      - key: N8N_DB_POSTGRESDB_PASSWORD
+        value: YjxBJtgTwSlBxnSQ
 
   - type: web
     name: metabase

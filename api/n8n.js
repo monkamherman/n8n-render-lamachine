@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const { exec } = require("child_process");
 const { setupDatabaseCheckRoute } = require("../check-db-connection");
+const { testProductionDB } = require("../test-db-production");
 
 const app = express();
 const port = process.env.PORT || 5678;
@@ -53,6 +54,25 @@ app.get("/keep-alive", (req, res) => {
   });
 });
 
+// Route pour tester la connexion à la base de données
+app.get("/test-db", async (req, res) => {
+  console.log("Test de base de données demandé à:", new Date().toISOString());
+  try {
+    const result = await testProductionDB();
+    res.json({
+      status: result ? "success" : "failed",
+      timestamp: new Date().toISOString(),
+      database_url: process.env.DATABASE_URL ? "configured" : "missing",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
 // Démarrer n8n en arrière-plan
 function startN8n() {
   // Configurer les variables d'environnement pour n8n
@@ -60,9 +80,12 @@ function startN8n() {
     ...process.env,
     N8N_BASIC_AUTH_ACTIVE: "false",
     N8N_HOST: "0.0.0.0",
-    N8N_PORT: "5679", // Port différent pour éviter les conflits
+    N8N_PORT: process.env.PORT || "5678", // Utiliser le même port que le service
     N8N_PROTOCOL: "http",
     WEBHOOK_URL: process.env.WEBHOOK_URL,
+    DB_CONNECTION_POOL_SIZE: process.env.DB_CONNECTION_POOL_SIZE || "10",
+    DB_CONNECTION_POOL_MIN: process.env.DB_CONNECTION_POOL_MIN || "2",
+    DB_CONNECTION_TIMEOUT: process.env.DB_CONNECTION_TIMEOUT || "60000",
   };
 
   const n8nCommand = `n8n start`;
@@ -71,6 +94,8 @@ function startN8n() {
     DATABASE_URL: env.DATABASE_URL ? "configured" : "missing",
     N8N_PORT: env.N8N_PORT,
     WEBHOOK_URL: env.WEBHOOK_URL,
+    DB_CONNECTION_POOL_SIZE: env.DB_CONNECTION_POOL_SIZE,
+    DB_CONNECTION_TIMEOUT: env.DB_CONNECTION_TIMEOUT,
   });
 
   exec(n8nCommand, { env }, (error, stdout, stderr) => {
