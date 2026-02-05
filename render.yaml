@@ -4,31 +4,18 @@ services:
     env: docker
     dockerfilePath: ./Dockerfile
     region: frankfurt
-    plan: free
-    branch: main
+    plan: starter
     numInstances: 1
     healthCheckPath: /healthz
     envVars:
-      - key: DB_POSTGRESDB_HOST
-        value: aws-0-eu-central-1.pooler.supabase.com
-      - key: DB_POSTGRESDB_PORT
-        value: "5432"
-      - key: DB_POSTGRESDB_DATABASE
-        value: postgres
-      - key: DB_POSTGRESDB_USER
-        value: postgres
-      - key: DB_POSTGRESDB_PASSWORD
-        sync: false
-      - key: DB_POSTGRESDB_SSL_ENABLED
-        value: "true"
-      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
-        value: "false"
-      - key: DB_POSTGRESDB_POOL_SIZE
-        value: "2"
       - key: PORT
-        value: 5678
+        value: "5678"
       - key: N8N_PORT
-        value: 5678
+        value: "5678"
+      - key: N8N_HOST
+        value: 0.0.0.0
+      - key: N8N_PROTOCOL
+        value: https
       - key: N8N_LOG_LEVEL
         value: debug
       - key: GENERIC_TIMEZONE
@@ -43,35 +30,10 @@ services:
         value: https://n8n-a6u8.onrender.com
       - key: N8N_COOKIE_DOMAIN
         value: .onrender.com
-      - key: N8N_HOST
-        value: n8n-a6u8.onrender.com
-      - key: NODE_OPTIONS
-        value: "--dns-result-order=ipv4first"
-      - key: N8N_DISABLE_TASK_RUNNERS
-        value: "false"
-      - key: DB_CONNECTION_POOL_SIZE
-        value: "10"
-      - key: DB_CONNECTION_POOL_MIN
-        value: "2"
-      - key: DB_CONNECTION_TIMEOUT
-        value: "60000"
-      - key: N8N_RUNNERS_ENABLED
-        value: "true"
-      - key: DB_POSTGRESDB_USER
-        value: herman_n8n
-      - key: DB_POSTGRESDB_PASSWORD
-        value: Xenos237
-  - type: worker
-    name: n8n-task-runner
-    env: docker
-    dockerfilePath: ./Dockerfile
-    region: frankfurt
-    plan: free
-    branch: main
-    numInstances: 1
-    envVars:
+      - key: DB_TYPE
+        value: postgresdb
       - key: DB_POSTGRESDB_HOST
-        value: aws-0-eu-central-1.pooler.supabase.com
+        value: db.kbeseafmtepfjatzvjnr.supabase.co
       - key: DB_POSTGRESDB_PORT
         value: "5432"
       - key: DB_POSTGRESDB_DATABASE
@@ -79,23 +41,17 @@ services:
       - key: DB_POSTGRESDB_USER
         value: postgres
       - key: DB_POSTGRESDB_PASSWORD
-        sync: false
+        sync: false # Définis manuellement dans l'interface Render
+      - key: DB_POSTGRESDB_SCHEMA
+        value: public
       - key: DB_POSTGRESDB_SSL_ENABLED
         value: "true"
       - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
         value: "false"
-      - key: NODE_OPTIONS
-        value: "--dns-result-order=ipv4first"
-      - key: N8N_LOG_LEVEL
-        value: debug
-      - key: GENERIC_TIMEZONE
-        value: Europe/Paris
-      - key: TZ
-        value: Europe/Paris
-      - key: N8N_DEFAULT_LOCALE
-        value: fr
-      - key: N8N_ENCRYPTION_KEY
-        generateValue: true
+      - key: DB_POSTGRESDB_POOL_SIZE
+        value: "5"
+      - key: N8N_MODE
+        value: regular
 
   - type: web
     name: metabase
