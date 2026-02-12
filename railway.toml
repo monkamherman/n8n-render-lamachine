@@ -37,7 +37,7 @@ TZ = "Europe/Paris"
 name = "n8n"
 
 [services.ports]
-port = 5678
+port = 3000
 protocol = "HTTP"
 
 [services.health_checks]
