@@ -1,5 +1,5 @@
 # Dockerfile pour n8n sur Railway avec Supabase
-FROM node:18-alpine
+FROM node:22-alpine
 
 # Définir le répertoire de travail
 WORKDIR /data
