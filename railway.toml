@@ -1,0 +1,47 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "npx n8n start"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+
+[env]
+N8N_HOST = "0.0.0.0"
+N8N_PORT = "5678"
+N8N_PROTOCOL = "https"
+NODE_ENV = "production"
+
+# Base de données Supabase
+DATABASE_URL = "${{SUPABASE_DATABASE_URL}}"
+SUPABASE_URL = "${{SUPABASE_URL}}"
+SUPABASE_SERVICE_KEY = "${{SUPABASE_SERVICE_KEY}}"
+
+# Configuration n8n
+N8N_BASIC_AUTH_ACTIVE = "false"
+N8N_ENCRYPTION_KEY = "${{N8N_ENCRYPTION_KEY}}"
+N8N_WEBHOOK_URL = "${{RAILWAY_PUBLIC_DOMAIN}}"
+
+# Performance et sécurité
+N8N_EXECUTION_DATA_PRUNE = "true"
+N8N_EXECUTION_DATA_MAX_AGE = "168"
+N8N_METRICS = "true"
+N8N_DIAGNOSTICS_ENABLED = "false"
+N8N_USER_MANAGEMENT_DISABLED = "true"
+
+# Fuseau horaire
+GENERIC_TIMEZONE = "Europe/Paris"
+TZ = "Europe/Paris"
+
+[[services]]
+name = "n8n"
+
+[services.ports]
+port = 5678
+protocol = "HTTP"
+
+[services.health_checks]
+path = "/healthz"
+interval = 30
+timeout = 10
+retries = 3
