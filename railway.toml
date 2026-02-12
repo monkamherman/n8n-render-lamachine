@@ -45,3 +45,8 @@ path = "/healthz"
 interval = 30
 timeout = 10
 retries = 3
+
+# Volume pour persister les données n8n
+[[volumes]]
+name = "n8n-data"
+mount_to = "/data/.n8n"

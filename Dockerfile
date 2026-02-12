@@ -53,8 +53,7 @@ ENV N8N_USER_MANAGEMENT_DISABLED=true
 ENV GENERIC_TIMEZONE=Europe/Paris
 ENV TZ=Europe/Paris
 
-# Point de montage pour les données n8n
-VOLUME ["/data/.n8n"]
+# Les données seront persistées via les volumes Railway
 
 # Commande de démarrage
 CMD ["npx", "n8n", "start"]
